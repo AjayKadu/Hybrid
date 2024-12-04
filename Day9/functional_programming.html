@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>functional prog</title>
+</head>
+
+<body>
+
+    <!-- <script>
+      
+        //Funtion return from function
+
+       function getSomething(){
+        var something = function (){
+            console.log("Something");    
+        }
+        return something;
+       }
+       var f = getSomething();
+       f();
+    </script>  -->
+
+    <!-- <script>
+        //Object creation using literal
+        var obj = {
+
+            No: 1,
+            Name: "Ajay",
+            Age: 23.6,
+            print : function(){
+                console.log(this.No + " " + this.Name + " " + this.Age);
+            }
+        }
+       obj.print();
+    </script> -->
+
+    <script>
+         
+         //Array of objects
+
+        // var array = [{ no: 1, name: "Ajay", age: 22 }, { no: 2, name: "Rohit", age: 34 }, { no: 3, name: "Virat", age: 30 }];
+
+        // for (let i = 0; i < array.length; i++) {
+        //     var res = array[i];
+        //     console.log(res.no + "  " + res.name + "  " + res.age);
+
+        // }
+
+
+
+        class person{
+
+            constructor(no, name, age){
+                this.No = no;
+                this.Name = name;
+                this.Age = age;
+            }
+
+            print(){
+                console.log(this.No + "  " + this.Name + "  " + this.Age);
+                
+            }
+
+        }
+
+        var p1 = new person(1,"Rohit",34);
+        var p2 = new person(2,"Virat",32);
+
+        p1.print();
+        p2.print();
+
+
+
+    </script>
+
+
+</body>
+
+</html>
