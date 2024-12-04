@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+</head>
+<body>
+    <center>
+           
+        <h1>Registration Form</h1>
+
+        <table>
+            <tr>
+                <td>Name</td>
+                <td>
+                    
+                    <input type="text" id="txtName"><br>
+                    <label id="nameDiv"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>Age</td>
+                <td>
+                    <input type="text" id="txtAge">
+                </td>
+            </tr>
+            <tr>
+                <td>Country</td>
+                <td>
+                    <select id="cmbCountry">
+                        <option value="">---Select Your Country---</option>
+                        <option value="91">India</option>
+                        <option value="10">USA</option>
+                        <option value="44">UK</option>
+                        <option value="7">Russia</option>
+                        <option value="34">Spain</option>
+                        <option value="45">Ierland</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Hobbies</td>
+                <td>
+                    <select id="cmbHobbies" multiple>
+                        <option value="1">Cricket</option>
+                        <option value="2">Swimming</option>
+                        <option value="3">Reading</option>
+                        <option value="4">Writing</option>
+                        <option value="5">Travelling</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td>
+                    <input type="radio" value="1" name="radGender"> Male
+                    <input type="radio" value="2" name="radGender"> Female
+                    <input type="radio" value="3" name="radGender"> Other
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="button" value="Submit" onclick="doSomething()">
+                </td>
+            </tr>
+        </table>
+    </center>
+
+    <script src="registration.js"></script>
+
+    <script>
+
+        function doSomething(){
+
+            checkValidation("txtName","nameDiv","Name is required...");
+
+            checkValidationAge("txtAge")
+
+            checkValidationCountry("cmbCountry");
+
+            multipleHobbies("cmbHobbies")
+           
+            //debugger;
+            genderSelected("radGender");
+
+        }
+
+     
+        
+      
+
+
+    </script>
+</body>
+</html>
