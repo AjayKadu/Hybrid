@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <center>
+        <table border="1" id="tableId" style="width: 200px; text-align: center;">
+
+
+        </table>
+    </center>
+
+    <script>
+
+        function callMeOnReadyStateChange() {
+
+            var refToTable = document.getElementById("tableId");
+            if (helper.readyState == 4 && helper.status == 200) {
+
+              var data = JSON.parse(helper.responseText); 
+
+                data.map((item) => {
+
+                    refToTable.innerHTML =
+                        refToTable.innerHTML +
+                        ` <tr>
+                              <td>${item.no}</td>
+                              <td>${item.name}</td>
+                          </tr>`
+             });
+
+            }
+        }
+        var helper = new XMLHttpRequest();
+
+        helper.onreadystatechange = callMeOnReadyStateChange;
+        helper.open("GET", "http://127.0.0.1:5500/data.json");
+        helper.send();
+
+    </script>
+
+</body>
+
+</html>
