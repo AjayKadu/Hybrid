@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <script src="jquery-3.7.1.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <title>Employee</title>
+
+    <style>
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container" style="margin-top: 20px;">
+        <div class="col-md-8">
+            <div class="table-responsive mx-auto">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>EmpNo</th>
+                            <th>EName</th>
+                            <th>Job</th>
+                            <th>MGR</th>
+                            <th>Sal</th>
+                            <th>Hire</th>
+                            <th>Comm</th>
+                            <th>DeptNo</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tableBody">
+                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+
+var url = `http://localhost:9090/employee`;
+
+    function getDate(){
+        var helper = new XMLHttpRequest();
+        helper.onreadystatechange = () =>{
+           
+            if(helper.readyState == 4 && helper.status == 200){
+
+               var employees = JSON.parse(helper.responseText);
+               var refToTable = document.getElementById("tableBody");
+
+               for(let i=0; i<employees.length; i++){
+                   
+                  let empoloyee = employees[i];
+
+                  var row = `<tr>
+                            <td>${empoloyee.empno}</td>
+                            <td>${empoloyee.ename}</td>
+                            <td>${empoloyee.job}</td>
+                            <td>${empoloyee.mgr}</td>
+                            <td>${empoloyee.hire}</td>
+                            <td>${empoloyee.sal}</td>
+                            <td>${empoloyee.comm}</td>
+                            <td>${empoloyee.deptno}</td>
+                        </tr>`
+
+                  refToTable.innerHTML = refToTable.innerHTML + row;
+
+               }
+
+            }
+
+
+        };
+        helper.open("Get",url);
+        helper.send();
+    }
+
+       getDate();
+
+</script>
+
+
+</body>
+
+</html>
