@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <script src="jquery-3.7.1.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <title>Employee</title>
+
+    <style>
+        #A>.col-md-10 table,
+        #A>.col-md-10 thead,
+        #A>.col-md-10 tbody,
+        #A>.col-md-10 th,
+        #A>.col-md-10 td,
+        #A>.col-md-10 tr {
+            text-align: center;
+        }
+
+        #table input {
+            margin: 10px;
+        }
+
+        #table button {
+            margin: 10px;
+            margin-left: 0px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container" id="A" style="margin-top: 20px;">
+        <div class="row">
+            <div class="col-md-6">
+                <table id="table">
+                    <tr>
+                        <td colspan="2"><input type="hidden" id="txtNo"></td>
+                    </tr>
+                    <tr>
+                        <td>Name: </td>
+                        <td><input type="text" id="txtName"></td>
+                    </tr>
+                    <tr>
+                        <td>Designation: </td>
+                        <td><input type="text" id="txtJob"></td>
+                    </tr>
+                    <tr>
+                        <td>City: </td>
+                        <td><input type="text" id="txtCity"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button class="btn btn-success" id="add" onclick="Add()">Add Record</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-info" id="update" onclick="Update()">Update Record</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-10" style="margin-top: 15px;">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>EmpId</th>
+                            <th>EmpName</th>
+                            <th>Job</th>
+                            <th>City</th>
+                            <th colspan="2">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        var url = `http://localhost:9090/employee`;
+        var isUpdate = false;
+
+        function getDate() {
+            var helper = new XMLHttpRequest();
+            helper.onreadystatechange = () => {
+
+                if (helper.readyState == 4 && helper.status == 200) {
+                       
+                    BtnToggel();
+
+
+                    var employees = JSON.parse(helper.responseText);
+                    var refToTable = document.getElementById("tableBody");
+
+                    refToTable.innerHTML = "";
+
+                    for (let i = 0; i < employees.length; i++) {
+
+                        let empoloyee = employees[i];
+
+                        var row = `<tr>
+                            <td>${empoloyee.emp_id}</td>
+                            <td>${empoloyee.ename}</td>
+                            <td>${empoloyee.empRole}</td>
+                            <td>${empoloyee.empCity}</td>
+                            <td>
+                                <button class="btn btn-warning" onClick="Edit(${empoloyee.emp_id})">Edit</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" onClick="Delete(${empoloyee.emp_id})">Delete</button>
+                            </td>
+                        </tr>`
+                        refToTable.innerHTML = refToTable.innerHTML + row;
+                    }
+                }
+            };
+            helper.open("Get", url);
+            helper.send();
+        }
+
+        function Add() {
+
+            var refToName = document.getElementById("txtName");
+            var refToRole = document.getElementById("txtJob");
+            var refToCity = document.getElementById("txtCity");
+
+            var newRecord = {
+                "Name": refToName.value,
+                "Role": refToRole.value,
+                "City": refToCity.value
+            };
+
+            var dataString = JSON.stringify(newRecord);
+
+            var helper = new XMLHttpRequest();
+
+            helper.onreadystatechange = () => {
+
+          
+                if (helper.readyState == 4 && helper.status == 200) {
+                    var result = JSON.parse(helper.responseText);
+                    if (result.affectedRows != null || result.affectedRows != undefined) {
+
+                        if (result.affectedRows > 0) {
+                            clearBoxText()
+                            BtnToggel();
+                            getDate();
+                        }
+                    }
+                }
+
+            };
+            helper.open("POST", url);
+            helper.setRequestHeader("content-type", "application/json");
+            helper.send(dataString);
+
+        }
+
+        function Edit(No) {
+
+            var helper = new XMLHttpRequest();
+            helper.onreadystatechange = () => {
+
+                if (helper.readyState == 4 && helper.status == 200) {
+
+                    var result = JSON.parse(helper.responseText);
+
+                    if (result.length > 0) {
+
+                        isUpdate = true;
+                        BtnToggel();
+
+                        var refToNo = document.getElementById("txtNo");
+                        var refToName = document.getElementById("txtName");
+                        var refToJob = document.getElementById("txtJob");
+                        var refToCity = document.getElementById("txtCity");
+
+                        var employee = result[0];
+                        refToNo.value = employee.emp_id;
+                        refToName.value = employee.ename;
+                        refToJob.value = employee.empRole;
+                        refToCity.value = employee.empCity;
+
+                    }
+
+                }
+
+            };
+            helper.open("GET", url + "/" + No);
+            helper.send();
+
+
+        }
+
+        function Update() {
+
+            var refToNo = document.getElementById("txtNo");
+            var refToName = document.getElementById("txtName");
+            var refToJob = document.getElementById("txtJob");
+            var refToCity = document.getElementById("txtCity");
+
+            var updateData = {
+                "emp_id" : refToNo.value,
+                "ename" : refToName.value,
+                "empRole" : refToJob.value,
+                "empCity" : refToCity.value
+            };
+
+            
+          var dataString = JSON.stringify(updateData);
+
+            var helper = new XMLHttpRequest();
+            helper.onreadystatechange = () => {
+                if(helper.readyState == 4 && helper.status == 200){
+
+                    var result = JSON.parse(helper.responseText);
+
+                    if(result.affectedRows != null || result.affectedRows != undefined){
+                        if(result.affectedRows > 0){
+                            BtnToggel();
+                            isUpdate = false;
+                            getDate();
+                            clearBoxText()
+                        }
+                    }
+                }
+
+            };
+            helper.open("PUT", url + "/" + refToNo.value);
+            helper.setRequestHeader("content-type", "application/json");
+            helper.send(dataString);
+
+        }
+
+        function clearBoxText(){
+           
+            var refToNo = document.getElementById("txtNo");
+            var refToName = document.getElementById("txtName");
+            var refToJob = document.getElementById("txtJob");
+            var refToCity = document.getElementById("txtCity");
+
+            refToNo.value = "";
+            refToName.value = "";
+            refToJob.value = "";
+            refToCity.value = "";
+
+        }
+
+        function Delete(No){
+            
+            var helper = new XMLHttpRequest();
+            helper.onreadystatechange = () => {
+        
+                if(helper.readyState == 4 && helper.status == 200){
+                    var result = JSON.parse(helper.responseText);
+                     if(result.affectedRows != null || result.affectedRows != undefined){
+                        if(result.affectedRows > 0){
+                            getDate();
+                        }
+                     }
+                }
+            };
+            helper.open("Delete", url + "/" + No);
+            helper.send();
+
+        }
+
+        function BtnToggel(){
+             
+           var refToAddBtn = document.getElementById("add");
+           var refToUpdateBtn = document.getElementById("update");
+
+           if(isUpdate == false){
+
+            refToUpdateBtn.style.display = "none";
+            refToAddBtn.style.display = "block";
+
+           }
+           else{
+            refToAddBtn.style.display = "none";
+            refToUpdateBtn.style.display = "block";
+           }
+
+        }
+
+        getDate();
+
+    </script>
+
+
+</body>
+
+</html>
