@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <script src="jquery-3.7.1.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <title>Login</title>
+</head>
+<body>
+      
+     <div class="container" style="margin-top: 20px;">
+        <div class="row">
+            <div class="col-md-4">
+               <div class="table-responsive">
+                <table class="table table-bordred"> 
+                    <tr>
+                        <td>UserName: </td>
+                        <td><input type="text" id="txtUsername"></td>
+                    </tr>
+                    <tr>
+                        <td>Password: </td>
+                        <td><input type="password" id="txtPassword"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button class="btn btn-primary" onclick="SignUp()">Sign Up</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td  colspan="2" style="color: red;">
+                            <div class="alert" id="messageDiv"></div>
+                        </td>
+                    </tr>
+                </table>
+               </div>                    
+            </div>
+        </div>
+     </div>
+
+     <script>
+      
+      var url = `http://localhost:9090/login`
+    
+
+      function SignUp(){
+        var refToUsername = document.getElementById("txtUsername");
+        var refToPassword = document.getElementById("txtPassword");
+
+        var credentials = {
+            "userName" : refToUsername.value,
+            "password" : refToPassword.value
+        }
+
+        var helper = new XMLHttpRequest();
+        helper.onreadystatechange = () => {
+            if(helper.readyState == 4 && helper.status == 200){
+
+                var reply = JSON.parse(helper.responseText); 
+
+                    if(reply.token != null){
+
+                        sessionStorage.setItem("token", reply.token);
+                        window.location.href = "index.html";
+                    }
+                    else{
+                       
+                        setMessage("Credential are Invalid");
+                        refToUsername.value = "";
+                        refToPassword.value = "";
+
+                    }
+
+            }
+        };
+        helper.open("POST", url);
+        helper.setRequestHeader("content-type", "application/json");
+        helper.send(JSON.stringify(credentials));
+
+      }
+
+      function setMessage(message){
+
+        var refToMessageDiv = document.getElementById("messageDiv");
+             refToMessageDiv.innerText = message;
+             setTimeout(() => {
+                refToMessageDiv.innerText = "";
+             }, 3000);
+
+      }
+
+     </script>
+
+</body>
+</html>
