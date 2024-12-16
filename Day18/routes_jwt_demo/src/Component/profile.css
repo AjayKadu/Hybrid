@@ -1,0 +1,34 @@
+
+
+    body{
+            background-color: rgb(235 234 243);
+    }
+
+    .card {
+  height: 500px;
+  text-align: center;
+  margin-top: 20px;
+  border: 2px solid black;
+  box-shadow: 15px 13px 0.5px 0.1rem rgba(12, 12, 12, 0.4);
+
+}
+
+
+.card-body {
+  padding: 2px;
+  background-color:white;
+}
+
+p{
+    font: 1em sans-serif;
+}
+
+.card-header{
+    background-color: black;
+    color: white;
+}
+
+.card-footer{
+    background-color: black;
+    color: white;
+}

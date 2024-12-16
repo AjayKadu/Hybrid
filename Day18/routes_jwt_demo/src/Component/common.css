@@ -1,0 +1,6 @@
+.jumbotron{
+    color:white;
+    background-image: linear-gradient(to left, rgb(15, 0, 182), rgba(6, 0, 72, 0.8));
+    clip-path: polygon(50% 0%, 100% 0, 100% 84%, 0 100%, 0 0);
+    border-radius: 0;
+}
