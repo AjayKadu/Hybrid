@@ -1,0 +1,100 @@
+Commonly Used Icons
+
+## Home & Navigation
+home
+home-outline
+menu
+arrow-left
+arrow-right
+chevron-left
+chevron-right
+arrow-up
+arrow-down
+
+## User & Account
+account
+account-outline
+account-circle
+account-plus
+account-edit
+
+## Settings & Tools
+cog
+cog-outline
+wrench
+tune
+settings
+
+## Media
+play
+pause
+stop
+play-circle
+play-box
+music
+volume-high
+volume-off
+
+##Communication
+email
+email-outline
+message
+phone
+phone-outline
+
+##Social
+thumb-up
+thumb-down
+star
+heart
+heart-outline
+
+## Security
+lock
+lock-outline
+key
+shield
+shield-check
+
+## Files & Documents
+file
+file-outline
+folder
+folder-outline
+clipboard
+
+## Shopping
+cart
+cart-outline
+credit-card
+currency-usd
+
+## Weather
+weather-sunny
+weather-cloudy
+weather-rainy
+weather-windy
+umbrella
+
+## Health
+heart-pulse
+hospital
+stethoscope
+pill
+
+## Devices
+cellphone
+laptop
+tablet
+desktop
+
+## Miscellaneous
+
+alert
+calendar
+clock
+camera
+magnify (search)
+help-circle
+check-circle
+information
